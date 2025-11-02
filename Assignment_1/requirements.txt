@@ -1,0 +1,18 @@
+# Core dependencies
+nltk>=3.8
+numpy>=1.24.0
+matplotlib>=3.7.0
+
+# Data loading
+datasets>=2.14.0
+
+# Elasticsearch
+elasticsearch>=8.9.0
+
+# Optional database backends
+# Uncomment if using these datastores
+# rocksdb-python>=0.8.0
+# psycopg2-binary>=2.9.0
+
+# Testing (optional)
+# pytest>=7.4.0
