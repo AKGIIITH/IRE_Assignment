@@ -6,13 +6,9 @@ matplotlib>=3.7.0
 # Data loading
 datasets>=2.14.0
 
-# Elasticsearch
-elasticsearch>=8.9.0
+# Elasticsearch - version 8.x for compatibility
+elasticsearch>=8.9.0,<9.0.0
 
-# Optional database backends
-# Uncomment if using these datastores
-# rocksdb-python>=0.8.0
-# psycopg2-binary>=2.9.0
-
-# Testing (optional)
-# pytest>=7.4.0
+# Datastores
+rocksdb-python>=0.8.0
+psycopg2-binary>=2.9.0

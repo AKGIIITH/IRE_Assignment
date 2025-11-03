@@ -1,302 +1,44 @@
 [
-  {
-    "query_id": "Q01",
-    "query_text": "\"football\"",
-    "type": "Single Term (Common)",
-    "justification": "Tests retrieval speed for a single, high-frequency term."
-  },
-  {
-    "query_id": "Q02",
-    "query_text": "\"Ukraine\"",
-    "type": "Single Term (Common)",
-    "justification": "Tests retrieval speed for a high-frequency proper noun."
-  },
-  {
-    "query_id": "Q03",
-    "query_text": "\"music\"",
-    "type": "Single Term (Common)",
-    "justification": "Tests retrieval speed for a common term found in news and Wikipedia."
-  },
-  {
-    "query_id": "Q04",
-    "query_text": "\"Raiola\"",
-    "type": "Single Term (Rare)",
-    "justification": "Tests retrieval speed for a single, low-frequency proper noun."
-  },
-  {
-    "query_id": "Q05",
-    "query_text": "\"Stryzhobyk\"",
-    "type": "Single Term (Rare)",
-    "justification": "Tests retrieval for a very rare, specific proper noun (from article 999)."
-  },
-  {
-    "query_id": "Q06",
-    "query_text": "\"sledding\"",
-    "type": "Single Term (Medium)",
-    "justification": "Tests a medium-frequency term, likely in specific contexts (article 997)."
-  },
-  {
-    "query_id": "Q07",
-    "query_text": "\"asdfghjkl\"",
-    "type": "Single Term (Zero)",
-    "justification": "Tests system's ability to quickly return zero results for a non-existent term."
-  },
-  {
-    "query_id": "Q08",
-    "query_text": "\"photosynthesis\"",
-    "type": "Single Term (Wikipedia)",
-    "justification": "Tests a common scientific term primarily from the Wikipedia dataset."
-  },
-  {
-    "query_id": "Q09",
-    "query_text": "\"Nebraska\" AND \"Colorado\"",
-    "type": "Boolean (AND)",
-    "justification": "Tests intersection of two high-frequency terms from the same document (article 998)."
-  },
-  {
-    "query_id": "Q10",
-    "query_text": "\"Pennsylvania\" AND \"snow\"",
-    "type": "Boolean (AND)",
-    "justification": "Tests intersection of a location and a common noun (article 997)."
-  },
-  {
-    "query_id": "Q11",
-    "query_text": "\"Brussels\" AND \"jazz\"",
-    "type": "Boolean (AND)",
-    "justification": "Tests intersection of a location and a topic (article 1000)."
-  },
-  {
-    "query_id": "Q12",
-    "query_text": "\"warriors\" AND \"Avdiivka\"",
-    "type": "Boolean (AND)",
-    "justification": "Tests intersection of a common term and a specific location (article 999)."
-  },
-  {
-    "query_id": "Q13",
-    "query_text": "\"Nebraska\" AND \"jazz\"",
-    "type": "Boolean (AND)",
-    "justification": "Tests intersection of two terms unlikely to be in the same document (low result set)."
-  },
-  {
-    "query_id": "Q14",
-    "query_text": "\"Albert Einstein\" AND \"theory of relativity\"",
-    "type": "Boolean (AND) + Phrase",
-    "justification": "Tests intersection of a phrase and a name (Wikipedia)."
-  },
-  {
-    "query_id": "Q15",
-    "query_text": "\"sledding\" AND \"Avdiivka\"",
-    "type": "Boolean (AND)",
-    "justification": "Tests intersection that should yield zero results."
-  },
-  {
-    "query_id": "Q16",
-    "query_text": "\"Nebraska\" OR \"Colorado\"",
-    "type": "Boolean (OR)",
-    "justification": "Tests union of two high-frequency terms."
-  },
-  {
-    "query_id": "Q17",
-    "query_text": "\"sledding\" OR \"snowboarding\"",
-    "type": "Boolean (OR)",
-    "justification": "Tests union of two related, medium-frequency terms (article 997)."
-  },
-  {
-    "query_id": "Q18",
-    "query_text": "\"Raiola\" OR \"Sanders\"",
-    "type": "Boolean (OR)",
-    "justification": "Tests union of two low-frequency proper nouns (article 998)."
-  },
-  {
-    "query_id": "Q19",
-    "query_text": "\"Tymoshchuk\" OR \"Duzhenkyi\" OR \"Kaliayev\"",
-    "type": "Boolean (OR)",
-    "justification": "Tests union of multiple very-low-frequency terms."
-  },
-  {
-    "query_id": "Q20",
-    "query_text": "\"blues\" OR \"jazz\" OR \"latin\"",
-    "type": "Boolean (OR)",
-    "justification": "Tests union of related topic terms (article 1000)."
-  },
-  {
-    "query_id": "Q21",
-    "query_text": "\"football\" AND NOT \"Colorado\"",
-    "type": "Boolean (NOT)",
-    "justification": "Tests negation; retrieval of a common term excluding a specific context."
-  },
-  {
-    "query_id": "Q22",
-    "query_text": "\"president\" AND NOT \"Ukraine\"",
-    "type": "Boolean (NOT)",
-    "justification": "Tests negation to filter a common term."
-  },
-  {
-    "query_id": "Q23",
-    "query_text": "\"jazz\" AND NOT \"Brussels\"",
-    "type": "Boolean (NOT)",
-    "justification": "Tests negation, finding documents about jazz not related to article 1000."
-  },
-  {
-    "query_id": "Q24",
-    "query_text": "\"World War II\" AND NOT \"Germany\"",
-    "type": "Boolean (NOT) + Phrase",
-    "justification": "Tests negation on a high-frequency Wikipedia topic."
-  },
-  {
-    "query_id": "Q25",
-    "query_text": "\"Shedeur Sanders\"",
-    "type": "Phrase (2-word)",
-    "justification": "Tests a 2-word phrase query for a proper name (article 998)."
-  },
-  {
-    "query_id": "Q26",
-    "query_text": "\"Central Pennsylvania\"",
-    "type": "Phrase (2-word)",
-    "justification": "Tests a 2-word phrase query for a location (article 997)."
-  },
-  {
-    "query_id": "Q27",
-    "query_text": "\"Pino Daniele\"",
-    "type": "Phrase (2-word)",
-    "justification": "Tests a 2-word phrase query for a proper name (article 1000)."
-  },
-  {
-    "query_id": "Q28",
-    "query_text": "\"York County student\"",
-    "type": "Phrase (3-word)",
-    "justification": "Tests a 3-word phrase query (article 997)."
-  },
-  {
-    "query_id": "Q29",
-    "query_text": "\"Main Intelligence Directorate\"",
-    "type": "Phrase (3-word)",
-    "justification": "Tests a 3-word phrase query for an organization (article 999)."
-  },
-  {
-    "query_id": "Q30",
-    "query_text": "\"Crosses of Military Merit\"",
-    "type": "Phrase (4-word)",
-    "justification": "Tests a 4-word phrase query (article 999)."
-  },
-  {
-    "query_id": "Q31",
-    "query_text": "\"to be or not to be\"",
-    "type": "Phrase (6-word)",
-    "justification": "Tests a classic long phrase query (Wikipedia)."
-  },
-  {
-    "query_id": "Q32",
-    "query_text": "\"a 73-yard Dylan Raiola to Jahmal Banks touchdown\"",
-    "type": "Phrase (Long)",
-    "justification": "Tests a very long, specific phrase query from article 998."
-  },
-  {
-    "query_id": "Q33",
-    "query_text": "\"fresh blanket of snow\"",
-    "type": "Phrase (4-word)",
-    "justification": "Tests a 4-word common phrase (article 997)."
-  },
-  {
-    "query_id": "Q34",
-    "query_text": "\"The Music Village - Jazz Club\"",
-    "type": "Phrase (5-word)",
-    "justification": "Tests a 5-word phrase with punctuation (article 1000)."
-  },
-  {
-    "query_id": "Q35",
-    "query_text": "\"quick brown fox\"",
-    "type": "Phrase (3-word)",
-    "justification": "Tests a phrase query that should yield zero results."
-  },
-  {
-    "query_id": "Q36",
-    "query_text": "(\"Nebraska\" OR \"Colorado\") AND \"football\"",
-    "type": "Complex (OR + AND)",
-    "justification": "Tests operator precedence and union/intersection logic."
-  },
-  {
-    "query_id": "Q37",
-    "query_text": "(\"blues\" OR \"jazz\") AND \"Brussels\" AND NOT \"Pino Daniele\"",
-    "type": "Complex (OR + AND + NOT)",
-    "justification": "Tests complex boolean logic with multiple operators."
-  },
-  {
-    "query_id": "Q38",
-    "query_text": "(\"Avdiivka\" AND \"warriors\") OR (\"Robotyne\" AND \"warriors\")",
-    "type": "Complex (AND + OR)",
-    "justification": "Tests distribution of AND over OR for low-frequency terms."
-  },
-  {
-    "query_id": "Q39",
-    "query_text": "\"president\" AND (\"Ukraine\" OR \"USA\")",
-    "type": "Complex (AND + OR)",
-    "justification": "Tests retrieval of a common term in two different contexts."
-  },
-  {
-    "query_id": "Q40",
-    "query_text": "\"Travis Hunter\" AND (\"receiving\" OR \"cornerback\")",
-    "type": "Complex (AND + OR)",
-    "justification": "Tests finding a person in two different contexts (article 998)."
-  },
-  {
-    "query_id": "Q41",
-    "query_text": "\"sack\"",
-    "type": "Single Term (Common)",
-    "justification": "Tests a common word in sports context (article 998)."
-  },
-  {
-    "query_id": "Q42",
-    "query_text": "\"guitar\"",
-    "type": "Single Term (Medium)",
-    "justification": "Tests a medium-frequency term (article 1000)."
-  },
-  {
-    "query_id": "Q43",
-    "query_text": "\"quarterback\"",
-    "type": "Single Term (Medium)",
-    "justification": "Tests a medium-frequency term (article 998)."
-  },
-  {
-    "query_id": "Q44",
-    "query_text": "\"decree\"",
-    "type": "Single Term (Medium)",
-    "justification": "Tests a medium-frequency term (article 999)."
-  },
-  {
-    "query_id": "Q45",
-    "query_text": "\"Renaissance\"",
-    "type": "Single Term (Wikipedia)",
-    "justification": "Tests a high-frequency term from the Wikipedia dataset."
-  },
-  {
-    "query_id": "Q46",
-    "query_text": "\"Nebraska\" AND \"sack\" AND \"Sanders\"",
-    "type": "Boolean (AND)",
-    "justification": "Tests intersection of three terms from a single article."
-  },
-  {
-    "query_id": "Q47",
-    "query_text": "\"Mona Lisa\" AND \"Louvre\"",
-    "type": "Boolean (AND) + Phrase",
-    "justification": "Tests a common knowledge query from Wikipedia."
-  },
-  {
-    "query_id": "Q48",
-    "query_text": "\"Memorial Stadium\" AND (\"Nebraska\" OR \"Colorado\")",
-    "type": "Complex (Phrase + OR)",
-    "justification": "Tests a phrase query combined with a union."
-  },
-  {
-    "query_id": "Q49",
-    "query_text": "\"Dylan Wentz\" AND (\"sledding\" OR \"snowboarding\")",
-    "type": "Complex (Phrase + OR)",
-    "justification": "Tests intersection of a name (phrase) with a union of activities."
-  },
-  {
-    "query_id": "Q50",
-    "query_text": "\"Paolo Loveri\" AND \"guitar\"",
-    "type": "Boolean (AND) + Phrase",
-    "justification": "Tests a name (phrase) intersected with a topic term (article 1000)."
-  }
+  "\"football\"",
+  "\"Ukraine\"",
+  "\"music\"",
+  "\"biodiversity\"",
+  "\"pandemic\"",
+  "\"quantum\"",
+  "\"photosynthesis\"",
+  "\"climate\" AND \"change\"",
+  "\"education\" AND \"reform\"",
+  "\"technology\" AND \"innovation\"",
+  "\"economy\" AND \"growth\"",
+  "\"quantum\" AND \"computing\"",
+  "\"football\" OR \"basketball\"",
+  "\"solar\" OR \"wind\"",
+  "\"python\" OR \"java\"",
+  "\"democracy\" OR \"republic\" OR \"monarchy\"",
+  "\"blues\" OR \"jazz\" OR \"classical\"",
+  "\"football\" AND NOT \"American\"",
+  "\"president\" AND NOT \"United States\"",
+  "\"music\" AND NOT \"classical\"",
+  "\"climate change\"",
+  "\"machine learning\"",
+  "\"renewable energy\"",
+  "\"artificial intelligence research\"",
+  "\"national health service\"",
+  "\"international monetary fund\"",
+  "\"sustainable development goals\"",
+  "\"public health emergency\"",
+  "(\"solar\" OR \"wind\") AND \"energy\"",
+  "(\"football\" OR \"basketball\") AND \"championship\" AND NOT \"college\"",
+  "(\"climate\" AND \"change\") OR (\"global\" AND \"warming\")",
+  "\"president\" AND (\"election\" OR \"campaign\")",
+  "\"technology\" AND (\"innovation\" OR \"disruption\")",
+  "\"vaccine\"",
+  "\"algorithm\"",
+  "\"cryptocurrency\"",
+  "\"legislation\"",
+  "\"Renaissance\"",
+  "\"artificial\" AND \"intelligence\" AND \"ethics\"",
+  "\"climate change\" AND (\"policy\" OR \"action\")",
+  "\"machine learning\" AND (\"supervised\" OR \"unsupervised\")",
+  "\"economic growth\" AND \"sustainability\""
 ]

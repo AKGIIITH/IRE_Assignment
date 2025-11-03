@@ -109,7 +109,22 @@ class QueryEngine:
             return set()
         
         postings = self.index[term]
-        return {doc_id for doc_id, *_ in postings}
+        
+        # Handle compressed postings (bytes) - need to decompress in MySelfIndex
+        # For now, assume index stores decompressed postings or is accessed through MySelfIndex
+        if isinstance(postings, bytes):
+            # This shouldn't happen if MySelfIndex properly exposes index
+            import pickle
+            postings = pickle.loads(postings)
+        
+        # Handle skip pointers if present
+        if self.use_skip_pointers and postings and isinstance(postings[0], tuple) and len(postings[0]) == 2:
+            # Format: [(posting, skip_to), ...]
+            # posting can be (doc_id, score, positions) or (doc_id, positions)
+            return {p[0][0] if isinstance(p[0], tuple) else p[0] for p in postings}
+        else:
+            # Regular postings: [(doc_id, ...), ...]
+            return {doc_id for doc_id, *_ in postings}
     
     def _intersect(self, list1: Set[str], list2: Set[str]) -> Set[str]:
         """Intersect two document sets."""
@@ -127,7 +142,19 @@ class QueryEngine:
         for term in terms:
             if term not in self.index:
                 return set()
-            term_postings.append(self.index[term])
+            postings = self.index[term]
+            
+            # Handle compressed postings
+            if isinstance(postings, bytes):
+                import pickle
+                postings = pickle.loads(postings)
+            
+            # Handle skip pointers
+            if self.use_skip_pointers and postings and isinstance(postings[0], tuple) and len(postings[0]) == 2:
+                # Extract actual postings from (posting, skip_to) format
+                postings = [p[0] for p in postings]
+            
+            term_postings.append(postings)
         
         # Find documents containing all terms
         doc_sets = [set(doc_id for doc_id, *_ in postings) for postings in term_postings]

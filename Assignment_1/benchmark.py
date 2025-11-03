@@ -152,7 +152,7 @@ def main():
     benchmark = Benchmark()
     
     # Collect documents
-    docs = benchmark.collect_documents(max_docs=500)
+    docs = benchmark.collect_documents(max_docs=50000)
     
     # Test configurations
     configs = [
@@ -182,6 +182,13 @@ def main():
                       'qproc': 'TERMatat', 'compr': 'NONE', 'optim': 'Null'},
             'index_id': 'self_x3'
         },
+        # Datastore=y
+        {
+            'class': MySelfIndex,
+            'params': {'core': 'SelfIndex', 'info': 'TFIDF', 'dstore': 'DB1', 
+                      'qproc': 'TERMatat', 'compr': 'NONE', 'optim': 'Null'},
+            'index_id': 'self_y2'
+        },
         # Compression variations (z)
         {
             'class': MySelfIndex,
@@ -201,6 +208,13 @@ def main():
             'params': {'core': 'SelfIndex', 'info': 'TFIDF', 'dstore': 'CUSTOM', 
                       'qproc': 'DOCatat', 'compr': 'NONE', 'optim': 'Null'},
             'index_id': 'self_q_daat'
+        },
+        # Optimization variations (i)
+        {
+            'class': MySelfIndex,
+            'params': {'core': 'SelfIndex', 'info': 'TFIDF', 'dstore': 'CUSTOM', 
+                      'qproc': 'TERMatat', 'compr': 'NONE', 'optim': 'Skipping'},
+            'index_id': 'self_i1_skip'
         },
     ]
     

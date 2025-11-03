@@ -1,6 +1,7 @@
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 import json
+import time
 from typing import Iterable, Tuple
 from index_base import IndexBase
 
@@ -12,14 +13,36 @@ class MyElasticsearchIndex(IndexBase):
                  es_host='localhost', es_port=9200):
         super().__init__(core, info, dstore, qproc, compr, optim)
         
-        # Connect to Elasticsearch
-        self.es = Elasticsearch([f'http://{es_host}:{es_port}'])
+        # Connect to Elasticsearch with retry logic
+        max_retries = 3
+        retry_delay = 2
         
-        # Check connection
-        if not self.es.ping():
-            raise ConnectionError("Cannot connect to Elasticsearch. Make sure it's running.")
-        
-        print(f"Connected to Elasticsearch at {es_host}:{es_port}")
+        for attempt in range(max_retries):
+            try:
+                # Initialize Elasticsearch client
+                self.es = Elasticsearch(
+                    [f'http://{es_host}:{es_port}'],
+                    request_timeout=30,
+                    max_retries=3,
+                    retry_on_timeout=True
+                )
+                
+                # Test connection with info() instead of ping()
+                info = self.es.info()
+                print(f"Connected to Elasticsearch at {es_host}:{es_port}")
+                print(f"Cluster: {info['cluster_name']}, Version: {info['version']['number']}")
+                return
+                
+            except Exception as e:
+                if attempt < max_retries - 1:
+                    print(f"Connection attempt {attempt + 1} failed: {e}")
+                    print(f"Retrying in {retry_delay} seconds...")
+                    time.sleep(retry_delay)
+                else:
+                    raise ConnectionError(
+                        f"Cannot connect to Elasticsearch at {es_host}:{es_port}. "
+                        f"Make sure it's running. Error: {e}"
+                    )
     
     def create_index(self, index_id: str, files: Iterable[Tuple[str, str]]) -> None:
         """Create Elasticsearch index and index documents."""

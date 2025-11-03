@@ -1,3 +1,4 @@
+import sqlite3
 import pickle
 import json
 import math
@@ -190,32 +191,56 @@ class MySelfIndex(IndexBase):
                 }, f)
         
         elif self.datastore_strategy == DataStore.DB1:
-            # y=2: RocksDB
-            try:
-                import rocksdb
-                db_path = str(self.base_dir / f"{index_id}_rocksdb")
-                db = rocksdb.DB(db_path, rocksdb.Options(create_if_missing=True))
+            # y=2: SQLite
+            db_path = self.base_dir / f"{index_id}_sqlite.db"
+            conn = sqlite3.connect(str(db_path))
+            cursor = conn.cursor()
+            
+            # Create tables
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS inverted_index (
+                    term TEXT PRIMARY KEY,
+                    postings BLOB
+                )
+            ''')
+            
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS metadata (
+                    key TEXT PRIMARY KEY,
+                    value BLOB
+                )
+            ''')
+            
+            # Insert index data
+            for term, postings in self.index.items():
+                # Serialize postings if it's not already bytes
+                if isinstance(postings, bytes):
+                    postings_blob = postings
+                else:
+                    postings_blob = pickle.dumps(postings)
                 
-                for term, postings in self.index.items():
-                    db.put(term.encode(), postings)
-                
-                # Store metadata
-                meta = {
-                    'doc_lengths': self.doc_lengths,
-                    'idf_scores': self.idf_scores,
-                    'total_docs': self.total_docs,
-                    'indexed_files': list(self.indexed_files)
-                }
-                db.put(b'__metadata__', pickle.dumps(meta))
-                
-                del db
-            except ImportError:
-                print("RocksDB not available, falling back to pickle")
-                self.datastore_strategy = DataStore.CUSTOM
-                self._save_index(index_id)
+                cursor.execute(
+                    'INSERT OR REPLACE INTO inverted_index (term, postings) VALUES (?, ?)',
+                    (term, postings_blob)
+                )
+            
+            # Insert metadata
+            meta = {
+                'doc_lengths': self.doc_lengths,
+                'idf_scores': self.idf_scores,
+                'total_docs': self.total_docs,
+                'indexed_files': list(self.indexed_files)
+            }
+            cursor.execute(
+                'INSERT OR REPLACE INTO metadata (key, value) VALUES (?, ?)',
+                ('metadata', pickle.dumps(meta))
+            )
+            
+            conn.commit()
+            conn.close()
         
         elif self.datastore_strategy == DataStore.DB2:
-            # y=2: PostgreSQL - simplified version saves to file
+            # y=3: PostgreSQL - simplified version saves to file
             print("PostgreSQL support not fully implemented, using pickle")
             self.datastore_strategy = DataStore.CUSTOM
             self._save_index(index_id)
@@ -235,14 +260,50 @@ class MySelfIndex(IndexBase):
                 self.idf_scores = meta['idf_scores']
                 self.total_docs = meta['total_docs']
                 self.indexed_files = set(meta['indexed_files'])
-    
+        
+        elif self.datastore_strategy == DataStore.DB1:
+            # y=2: SQLite
+            db_path = index_path
+            if not db_path.suffix == '.db':
+                # If path doesn't end with .db, try to find it
+                db_path = index_path.parent / f"{index_path.stem}_sqlite.db"
+            
+            conn = sqlite3.connect(str(db_path))
+            cursor = conn.cursor()
+            
+            # Load index data
+            cursor.execute('SELECT term, postings FROM inverted_index')
+            self.index = {}
+            for term, postings in cursor.fetchall():
+                self.index[term] = postings
+            
+            # Load metadata
+            cursor.execute('SELECT value FROM metadata WHERE key = ?', ('metadata',))
+            meta_row = cursor.fetchone()
+            if meta_row:
+                meta = pickle.loads(meta_row[0])
+                self.doc_lengths = meta['doc_lengths']
+                self.idf_scores = meta['idf_scores']
+                self.total_docs = meta['total_docs']
+                self.indexed_files = set(meta['indexed_files'])
+            
+            conn.close()
+
     def query(self, query: str) -> str:
         """Execute query and return results."""
         # Parse query
         query_ast = self.query_parser.parse(query)
         
+        # Create a decompressed view of the index for query engine
+        decompressed_index = {}
+        for term, compressed_postings in self.index.items():
+            if term == '__all_docs__':
+                decompressed_index[term] = compressed_postings
+            else:
+                decompressed_index[term] = self._decompress_postings(compressed_postings)
+        
         # Execute based on query processing strategy
-        engine = QueryEngine(self.index, self.total_docs, 
+        engine = QueryEngine(decompressed_index, self.total_docs, 
                            self.optim_strategy == Optimizations.Skipping)
         
         mode = 'TAAT' if self.qproc_strategy == QueryProc.TERMatat else 'DAAT'

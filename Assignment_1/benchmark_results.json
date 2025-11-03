@@ -1,0 +1,92 @@
+[
+  {
+    "identifier": "ESIndex_i3d2c1qTo0",
+    "creation_time": 0.8980302810668945,
+    "disk_size_mb": 0.0,
+    "avg_latency": 0.02198847702571324,
+    "p95_latency": 0.03213839530944823,
+    "p99_latency": 0.03378732919692993,
+    "throughput": 45.47564200892213,
+    "memory_mb": 36.13849067687988
+  },
+  {
+    "identifier": "SelfIndex_i1d1c1qTo0",
+    "creation_time": 10.84656548500061,
+    "disk_size_mb": 12.677461624145508,
+    "avg_latency": 1.5218258244650704,
+    "p95_latency": 1.6599558472633362,
+    "p99_latency": 1.6678501105308532,
+    "throughput": 0.657100558663594,
+    "memory_mb": 125.67426013946533
+  },
+  {
+    "identifier": "SelfIndex_i2d1c1qTo0",
+    "creation_time": 12.045413494110107,
+    "disk_size_mb": 12.419193267822266,
+    "avg_latency": 1.4784127076466878,
+    "p95_latency": 1.609713518619537,
+    "p99_latency": 1.6802276325225827,
+    "throughput": 0.6763946636763722,
+    "memory_mb": 128.90379905700684
+  },
+  {
+    "identifier": "SelfIndex_i3d1c1qTo0",
+    "creation_time": 10.784142255783081,
+    "disk_size_mb": 18.67119789123535,
+    "avg_latency": 1.6566256625311715,
+    "p95_latency": 1.8230111718177793,
+    "p99_latency": 1.8363189816474914,
+    "throughput": 0.6036336179900949,
+    "memory_mb": 138.56261253356934
+  },
+  {
+    "identifier": "SelfIndex_i3d2c1qTo0",
+    "creation_time": 10.941545486450195,
+    "disk_size_mb": 24.70703125,
+    "avg_latency": 1.5841586419514246,
+    "p95_latency": 1.7015332221984862,
+    "p99_latency": 1.8271580314636222,
+    "throughput": 0.6312442368442561,
+    "memory_mb": 138.56257438659668
+  },
+  {
+    "identifier": "SelfIndex_i3d1c2qTo0",
+    "creation_time": 11.389504671096802,
+    "disk_size_mb": 16.717385292053223,
+    "avg_latency": 2.042927384376526,
+    "p95_latency": 2.1644450426101685,
+    "p99_latency": 2.286691918373108,
+    "throughput": 0.4894886548605867,
+    "memory_mb": 138.56254386901855
+  },
+  {
+    "identifier": "SelfIndex_i3d1c3qTo0",
+    "creation_time": 11.89992094039917,
+    "disk_size_mb": 11.992701530456543,
+    "avg_latency": 2.578369969413394,
+    "p95_latency": 2.726412761211395,
+    "p99_latency": 2.8037153697013855,
+    "throughput": 0.3878404397393937,
+    "memory_mb": 138.5625057220459
+  },
+  {
+    "identifier": "SelfIndex_i3d1c1qDo0",
+    "creation_time": 11.406848669052124,
+    "disk_size_mb": 16.364795684814453,
+    "avg_latency": 1.7055206980024065,
+    "p95_latency": 1.8701347827911377,
+    "p99_latency": 1.928222377300262,
+    "throughput": 0.5863275267534982,
+    "memory_mb": 138.5575876235962
+  },
+  {
+    "identifier": "SelfIndex_i3d1c1qTosp",
+    "creation_time": 11.535853147506714,
+    "disk_size_mb": 17.891048431396484,
+    "avg_latency": 2.0657649834950766,
+    "p95_latency": 2.1508365631103517,
+    "p99_latency": 2.2566071891784665,
+    "throughput": 0.4840806555096198,
+    "memory_mb": 161.3068904876709
+  }
+]
