@@ -1,5 +1,7 @@
 # Modular Search Engine Implementation
 
+https://github.com/AKGIIITH/IRE_Assignment/tree/main/Assignment_1
+
 A comprehensive search engine implementation featuring both an Elasticsearch baseline and a modular from-scratch indexing system with configurable components. This project is designed to explore and evaluate the internal mechanics of a search engine, from text preprocessing and indexing to query execution and performance benchmarking.
 
 ## Features
